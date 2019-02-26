@@ -33,7 +33,7 @@ export const cmp = (a, b) => {
  * if their midpoint is indistinguishable from either. */
 export const touch = (a, b) => {
   const m = (a + b) / 2
-  return cmp(m, a) === 0 || cmp(m, b) === 0
+  return cmp2(m, a) === 0 || cmp2(m, b) === 0
 }
 
 /* Greedy comparison. Two points are defined to touch
@@ -41,12 +41,12 @@ export const touch = (a, b) => {
 export const touchPoints = (aPt, bPt) => {
   // call directly to (skip touch()) cmp() for performance boost
   const mx = (aPt.x + bPt.x) / 2
-  const aXMiss = cmp(mx, aPt.x) !== 0
-  if (aXMiss && cmp(mx, bPt.x) !== 0) return false
+  const aXMiss = cmp2(mx, aPt.x) !== 0
+  if (aXMiss && cmp2(mx, bPt.x) !== 0) return false
 
   const my = (aPt.y + bPt.y) / 2
-  const aYMiss = cmp(my, aPt.y) !== 0
-  if (aYMiss && cmp(my, bPt.y) !== 0) return false
+  const aYMiss = cmp2(my, aPt.y) !== 0
+  if (aYMiss && cmp2(my, bPt.y) !== 0) return false
 
   // we have touching on both x & y, we have to make sure it's
   // not just on opposite points thou
@@ -54,3 +54,14 @@ export const touchPoints = (aPt, bPt) => {
   if (!aYMiss && !aYMiss) return true
   return false
 }
+
+// 由于数据只有精度只不要保留7位小数，因此当坐标误差小于10^-7时，认为相等
+export const cmp2 = (a, b) => {
+  let delta = a - b
+  if (Math.abs(delta) > 1E-7) {
+    return delta < 0 ? -1 : 1
+  }
+  return 0
+}
+
+

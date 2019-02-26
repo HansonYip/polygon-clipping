@@ -50,7 +50,7 @@ var inLayer = null
 var outLayer = null
 var map = null
 
-import asia from '../geojson/asia-with-poly.json'
+import asia from '../geojson/parallel.json'
 import parallel from '../geojson/parallel.json'
 import cheese from '../geojson/cheese.json'
 
